@@ -28,9 +28,10 @@ export const NexTripLookup = () => {
   };
 
   const formatDepartureTimeText = (text, timestamp) => {
-    if (text.includes(':')) return `Departs at ${text}`;
-    if (text.includes('Min')) return `Departs in ${text} (${unixTimestampToLocalTime(timestamp)})`;
-    return `${text} (${unixTimestampToLocalTime(timestamp)})`;
+    let departureTime = unixTimestampToLocalTime(timestamp);
+    if (text.includes(':')) return `Departs at ${departureTime}`;
+    if (text.includes('Min')) return `Departs in ${text} (${departureTime})`;
+    return `${text} (${departureTime})`;
   };
 
   const unixTimestampToLocalTime = (timestamp) => {
@@ -47,7 +48,8 @@ export const NexTripLookup = () => {
         <IntegerInput value={stopNumber} onChange={setStopNumber} />
         <Button 
           onClick={handleGetNexTrip} 
-          variant={'contained'} 
+          size={'small'}
+          variant={'outlined'} 
         >
           {'Get Trip Info'}
         </Button>
@@ -59,37 +61,30 @@ export const NexTripLookup = () => {
         departures &&
         (
           departures.length > 0 ?
-          departures.map((departure) => {
-            return (
-              <TableContainer>
-                <Table className={'departures-table'}>
-                  <TableBody>
-                    {departures.map((departure) => {
-                      return (
-                        <TableRow
-                          key={departure.departure_time}
-                        >
-                          <TableCell align='right'>
-                            {`Route ${departure.route_id} ${departure.direction_text}`}
-                          </TableCell>
-                          <TableCell align='right'>{departure.description}</TableCell>
-                          <TableCell align='right'>
-                            {
-                              formatDepartureTimeText(
-                                departure.departure_text, 
-                                departure.departure_time
-                              )
-                            }
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )
-          })
-          // <DeparturesTable departures={departures} />
+          <TableContainer>
+            <Table className={'departures-table'}>
+              <TableBody>
+                {departures.map((departure) => {
+                  return (
+                    <TableRow key={departure.departure_time}>
+                      <TableCell align='left'>
+                        {`Route ${departure.route_id} ${departure.direction_text}`}
+                      </TableCell>
+                      <TableCell align='center'>{departure.description}</TableCell>
+                      <TableCell align='right'>
+                        {
+                          formatDepartureTimeText(
+                            departure.departure_text, 
+                            departure.departure_time
+                          )
+                        }
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
           : <h4>{'No current departure information available.'}</h4>
         )
       }
