@@ -1,12 +1,12 @@
-import { NexTripLookup } from './components/NexTripLookup';
+import { NextTripLookup } from './components/NextTripLookup';
 import './App.css';
 
 const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>{'NexTrip Dashboard'}</h1>
-        <NexTripLookup />
+        <h1>{'NextTrip Dashboard'}</h1>
+        <NextTripLookup />
       </header>
     </div>
   );

@@ -1,6 +1,6 @@
 const API_URL = 'https://svc.metrotransit.org/nextripv2';
 
-async function GetNexTrip(stopNumber) {
+async function GetNextTrip(stopNumber) {
 
   if (stopNumber === ''){
     return { 
@@ -15,4 +15,4 @@ async function GetNexTrip(stopNumber) {
   return json;
 }
 
-export default GetNexTrip;
+export default GetNextTrip;
