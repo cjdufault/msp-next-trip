@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -19,6 +19,7 @@ export const NextTripLookup = () => {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showUnSaveButton, setShowUnSaveButton] = useState(false);
 
+  // handle inputed stop numbers
   const handleGetNextTrip = async (event) => {
     event.preventDefault();
     await fetchNextTrips(stopNumber);
@@ -28,14 +29,11 @@ export const NextTripLookup = () => {
     setDepartures(null);
     setStatusMessage(defaultStatusMessage);
     setStopNumber(newValue);
-    setShowSaveButton(false);
-    setShowUnSaveButton(false);
   }
 
+  // add current stop to state, localStorage
   const handleSaveStop = () => {
     let newSavedStops = savedStops;
-    setShowSaveButton(false);
-    setShowUnSaveButton(true);
 
     if (!newSavedStops.includes(stopNumber)) {
       newSavedStops.push(stopNumber);
@@ -44,10 +42,9 @@ export const NextTripLookup = () => {
     }
   };
 
+  // remove saved stop from state, localStorage
   const handleUnSaveStop = () => {
     let newSavedStops = [];
-    setShowSaveButton(true);
-    setShowUnSaveButton(false);
 
     for (let i = 0; i < savedStops.length; i++) {
       if (savedStops[i] !== stopNumber)
@@ -58,14 +55,14 @@ export const NextTripLookup = () => {
     localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
   }
 
+  // user has selected a previously saved stop
   const handleSelectSavedStop = async (event) => {
     let savedStop = event.target.innerText;
-    setShowSaveButton(false);
-    setShowUnSaveButton(true);
     setStopNumber(savedStop);
     fetchNextTrips(savedStop);
   };
 
+  // queries API for next trips for a given stop
   const fetchNextTrips = async (stop) => {
     setDepartures(null);
     let NextTripResult = await GetNextTrip(stop);
@@ -73,21 +70,13 @@ export const NextTripLookup = () => {
     if (NextTripResult.success) {
       setStatusMessage(`Trip Info for ${NextTripResult.stops[0].description}:`);
       setDepartures(NextTripResult.departures);
-
-      if (savedStops.includes(stop)) {
-        setShowSaveButton(false);
-        setShowUnSaveButton(true);
-      }
-      else {
-        setShowSaveButton(true);
-        setShowUnSaveButton(false);
-      }
     }
     else {
       setStatusMessage(NextTripResult.detail);
     }
   };
 
+  // return a string describing the departure time, formatted appropriately 
   const formatDepartureTimeText = (text, timestamp) => {
     let departureTime = unixTimestampToLocalTime(timestamp);
     if (text.includes(':')) return `Departs at ${departureTime}`;
@@ -95,6 +84,7 @@ export const NextTripLookup = () => {
     return `${text} (${departureTime})`;
   };
 
+  // convert from unix time provided by API to local time in 24h format
   const unixTimestampToLocalTime = (timestamp) => {
     let date = new Date(timestamp * 1000);
     let hours = date.getHours();
@@ -103,13 +93,28 @@ export const NextTripLookup = () => {
     return `${hours}:${minutes}`;
   };
 
+  // show & hide the save/un-save buttons based on current state 
+  useEffect(() => {
+    if (departures && savedStops.includes(stopNumber)){
+      setShowSaveButton(false);
+      setShowUnSaveButton(true);
+    }
+    else if (departures && !savedStops.includes(stopNumber)) {
+      setShowSaveButton(true);
+      setShowUnSaveButton(false);
+    }
+    else {
+      setShowSaveButton(false);
+      setShowUnSaveButton(false);
+    }
+  }, [departures, savedStops, stopNumber]);
+
   return (
     <div>
       <div>
         <form onSubmit={handleGetNextTrip}>
           <IntegerInput 
             value={stopNumber} 
-            id={'stop-number-input'}
             onChange={handleChangeStopInputBox} 
           />
           <Button 
