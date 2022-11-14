@@ -33,3 +33,7 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.save-unsave-btn-area {
+  min-height: 5vh;
+}

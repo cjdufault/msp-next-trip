@@ -28,8 +28,6 @@ export const NextTripLookup = () => {
     setDepartures(null);
     setStatusMessage(defaultStatusMessage);
     setStopNumber(newValue);
-    setShowSaveButton(false);
-    setShowUnSaveButton(false);
   }
 
   const handleSaveStop = () => {
@@ -46,8 +44,6 @@ export const NextTripLookup = () => {
 
   const handleUnSaveStop = () => {
     let newSavedStops = [];
-    setShowSaveButton(true);
-    setShowUnSaveButton(false);
 
     for (let i = 0; i < savedStops.length; i++) {
       if (savedStops[i] !== stopNumber)
@@ -59,9 +55,11 @@ export const NextTripLookup = () => {
   }
 
   const handleSelectSavedStop = async (event) => {
+    setShowSaveButton(false);
+    setShowUnSaveButton(true);
     let savedStop = event.target.innerText;
     setStopNumber(savedStop);
-    fetchNextTrips(savedStop);
+    await fetchNextTrips(savedStop);
   };
 
   const fetchNextTrips = async (stop) => {
@@ -92,12 +90,16 @@ export const NextTripLookup = () => {
     return `${hours}:${minutes}`;
   };
 
-  useEffect(() => {
-    if (departures && savedStops.includes(stopNumber)) {
+  const updateStopUnstopButtons = (
+    currentStopNumber,
+    currentDepartures, 
+    currentSavedStops
+  ) => {
+    if (currentSavedStops.includes(currentStopNumber)) {
       setShowSaveButton(false);
       setShowUnSaveButton(true);
     }
-    else if (departures && !savedStops.includes(stopNumber)) {
+    else if (currentDepartures && !currentSavedStops.includes(currentStopNumber)) {
       setShowSaveButton(true);
       setShowUnSaveButton(false);
     }
@@ -105,6 +107,10 @@ export const NextTripLookup = () => {
       setShowSaveButton(false);
       setShowUnSaveButton(false);
     }
+  }
+
+  useEffect(() => {
+    updateStopUnstopButtons(stopNumber, departures, savedStops);
   }, [stopNumber, departures, savedStops]);
 
   return (
@@ -125,7 +131,7 @@ export const NextTripLookup = () => {
           </Button>
         </form>
       </div>
-      <div>
+      <div className={'save-unsave-btn-area'}>
         {
           showSaveButton &&
           <Button
