@@ -109,6 +109,7 @@ export const NextTripLookup = () => {
         <form onSubmit={handleGetNextTrip}>
           <IntegerInput 
             value={stopNumber} 
+            id={'stop-number-input'}
             onChange={handleChangeStopInputBox} 
           />
           <Button 

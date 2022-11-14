@@ -5,7 +5,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>{'NextTrip Dashboard'}</h1>
+        <h1>{'MSP Transit Planner'}</h1>
         <NextTripLookup />
       </header>
     </div>
