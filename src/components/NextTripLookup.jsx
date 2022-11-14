@@ -116,7 +116,10 @@ export const NextTripLookup = () => {
   return (
     <div>
       <div>
-        <form onSubmit={handleGetNextTrip}>
+        <form 
+          onSubmit={handleGetNextTrip} 
+          className={'stop-input-form'}
+        >
           <IntegerInput 
             value={stopNumber} 
             id={'stop-number-input'}
