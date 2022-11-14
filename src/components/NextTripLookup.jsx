@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -60,8 +60,6 @@ export const NextTripLookup = () => {
 
   const handleSelectSavedStop = async (event) => {
     let savedStop = event.target.innerText;
-    setShowSaveButton(false);
-    setShowUnSaveButton(true);
     setStopNumber(savedStop);
     fetchNextTrips(savedStop);
   };
@@ -73,15 +71,6 @@ export const NextTripLookup = () => {
     if (NextTripResult.success) {
       setStatusMessage(`Trip Info for ${NextTripResult.stops[0].description}:`);
       setDepartures(NextTripResult.departures);
-
-      if (savedStops.includes(stop)) {
-        setShowSaveButton(false);
-        setShowUnSaveButton(true);
-      }
-      else {
-        setShowSaveButton(true);
-        setShowUnSaveButton(false);
-      }
     }
     else {
       setStatusMessage(NextTripResult.detail);
@@ -102,6 +91,21 @@ export const NextTripLookup = () => {
 
     return `${hours}:${minutes}`;
   };
+
+  useEffect(() => {
+    if (departures && savedStops.includes(stopNumber)) {
+      setShowSaveButton(false);
+      setShowUnSaveButton(true);
+    }
+    else if (departures && !savedStops.includes(stopNumber)) {
+      setShowSaveButton(true);
+      setShowUnSaveButton(false);
+    }
+    else {
+      setShowSaveButton(false);
+      setShowUnSaveButton(false);
+    }
+  }, [stopNumber, departures, savedStops]);
 
   return (
     <div>
