@@ -19,14 +19,17 @@ export const NextTripLookup = () => {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showUnSaveButton, setShowUnSaveButton] = useState(false);
 
-  const handleGetNextTrip = async () => {
-    fetchNextTrips(stopNumber);
+  const handleGetNextTrip = async (event) => {
+    event.preventDefault();
+    await fetchNextTrips(stopNumber);
   };
 
   const handleChangeStopInputBox = (newValue) => {
     setDepartures(null);
     setStatusMessage(defaultStatusMessage);
     setStopNumber(newValue);
+    setShowSaveButton(false);
+    setShowUnSaveButton(false);
   }
 
   const handleSaveStop = () => {
@@ -70,13 +73,18 @@ export const NextTripLookup = () => {
     if (NextTripResult.success) {
       setStatusMessage(`Trip Info for ${NextTripResult.stops[0].description}:`);
       setDepartures(NextTripResult.departures);
+
+      if (savedStops.includes(stop)) {
+        setShowSaveButton(false);
+        setShowUnSaveButton(true);
+      }
+      else {
+        setShowSaveButton(true);
+        setShowUnSaveButton(false);
+      }
     }
     else {
       setStatusMessage(NextTripResult.detail);
-    }
-
-    if (!savedStops.includes(stop)) {
-      setShowSaveButton(true);
     }
   };
 
@@ -98,18 +106,21 @@ export const NextTripLookup = () => {
   return (
     <div>
       <div>
-        <IntegerInput 
-          value={stopNumber} 
-          onChange={handleChangeStopInputBox} 
-          onSubmit={handleGetNextTrip}
-        />
-        <Button 
-          onClick={handleGetNextTrip} 
-          size={'small'}
-          variant={'outlined'} 
-        >
-          {'Get Trip Info'}
-        </Button>
+        <form onSubmit={handleGetNextTrip}>
+          <IntegerInput 
+            value={stopNumber} 
+            onChange={handleChangeStopInputBox} 
+          />
+          <Button 
+            onClick={handleGetNextTrip} 
+            size={'small'}
+            variant={'outlined'} 
+          >
+            {'Get Trip Info'}
+          </Button>
+        </form>
+      </div>
+      <div>
         {
           showSaveButton &&
           <Button

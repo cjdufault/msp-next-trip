@@ -26,3 +26,10 @@
 .App-link {
   color: #61dafb;
 }
+
+.saved-stops {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

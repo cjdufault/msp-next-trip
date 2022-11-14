@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 
 const isValid = (value) => value !== '' && value !== '-';
 
-export const IntegerInput = ({ value, onChange, onSubmit }) => {
+export const IntegerInput = ({ value, onChange }) => {
   const regexp = new RegExp(`^-?[0-9]*$`);
   const [internalValue, setInternalValue] = useState(value);
   const [valid, setValid] = useState(isValid(value));
@@ -26,7 +26,6 @@ export const IntegerInput = ({ value, onChange, onSubmit }) => {
         setInternalValue(value);
         setValid(true);
       }}
-      onSubmit={onSubmit}
     />
   );
 };
