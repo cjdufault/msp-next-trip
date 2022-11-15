@@ -1,6 +1,6 @@
 {
-  "short_name": "Trip Planner",
-  "name": "MSP Transit Trip Planner",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
