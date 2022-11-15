@@ -5,8 +5,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 import GetNextTrip from '../apiData/GetNextTrip';
-import { IntegerInput } from './IntegerInput';
 
 export const NextTripLookup = () => {
 
@@ -18,6 +18,7 @@ export const NextTripLookup = () => {
   const [savedStops, setSavedStops] = useState(JSON.parse(localStorage.getItem('savedStops')) ?? []);
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showUnSaveButton, setShowUnSaveButton] = useState(false);
+  const [internalValue, setInternalValue] = useState(stopNumber);
 
   const handleGetNextTrip = async (event) => {
     event.preventDefault();
@@ -59,6 +60,7 @@ export const NextTripLookup = () => {
     setShowUnSaveButton(true);
     let savedStop = event.target.innerText;
     setStopNumber(savedStop);
+    setInternalValue(savedStop);
     await fetchNextTrips(savedStop);
   };
 
@@ -120,10 +122,16 @@ export const NextTripLookup = () => {
           onSubmit={handleGetNextTrip} 
           className={'stop-input-form'}
         >
-          <IntegerInput 
-            value={stopNumber} 
-            id={'stop-number-input'}
-            onChange={handleChangeStopInputBox} 
+          <TextField
+            value={ internalValue }
+            onChange={ (event) => {
+              const newValue = event.target.value;
+              setInternalValue(newValue);
+              handleChangeStopInputBox(newValue);
+            }}
+            onBlur={ () => {
+              setInternalValue(stopNumber);
+            }}
           />
           <Button 
             onClick={handleGetNextTrip} 
@@ -181,7 +189,7 @@ export const NextTripLookup = () => {
               <TableBody>
                 {departures.map((departure) => {
                   return (
-                    <TableRow key={departure.departure_time}>
+                    <TableRow key={`${departure.trip_id}-${departure.departure_time}`}>
                       <TableCell align='left'>
                         {`Route ${departure.route_id} ${departure.direction_text}`}
                       </TableCell>
