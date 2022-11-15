@@ -5,8 +5,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 import GetNextTrip from '../apiData/GetNextTrip';
-import { IntegerInput } from './IntegerInput';
 
 export const NextTripLookup = () => {
 
@@ -120,10 +120,10 @@ export const NextTripLookup = () => {
           onSubmit={handleGetNextTrip} 
           className={'stop-input-form'}
         >
-          <IntegerInput 
-            value={stopNumber} 
+          <TextField
+            value={stopNumber}
             id={'stop-number-input'}
-            onChange={handleChangeStopInputBox} 
+            onChange={handleChangeStopInputBox}
           />
           <Button 
             onClick={handleGetNextTrip} 
