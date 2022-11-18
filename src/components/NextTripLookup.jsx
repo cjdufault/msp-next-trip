@@ -70,7 +70,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
     let NextTripResult = await GetNextTrip(stop);
     
     if (NextTripResult.success) {
-      setStatusMessage(`Trip Info for ${NextTripResult.stops[0].description}:`);
+      setStatusMessage(NextTripResult.stops[0].description);
       setDepartures(NextTripResult.departures);
     }
     else {
