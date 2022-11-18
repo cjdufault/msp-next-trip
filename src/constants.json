@@ -1,3 +1,4 @@
 {
-  "API_URL": "https://svc.metrotransit.org/nextripv2"
+  "API_URL": "https://svc.metrotransit.org/nextripv2",
+  "DEFAULT_COORDINATES": [44.987, -93.258]
 }

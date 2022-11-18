@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import { GetVehiclePositions } from "../apiData/MapData";
+import constants from '../constants.json';
 
 export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
 
@@ -32,7 +33,7 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
         <Button onClick={mapExitCallback}><strong>X</strong></Button>
         <small>Vehicle locations update every 30 seconds.</small>
       </div>
-      <MapContainer className={'route-map-container'} center={[44.987, -93.258]} zoom={11} >
+      <MapContainer className={'route-map-container'} center={constants.DEFAULT_COORDINATES} zoom={11} >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
