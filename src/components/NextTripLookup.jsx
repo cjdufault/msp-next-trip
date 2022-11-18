@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import GetNextTrip from '../apiData/GetNextTrip';
 
-export const NextTripLookup = () => {
+export const NextTripLookup = ({ handleMapDisplay }) => {
 
   const defaultStatusMessage = 'Enter stop number in the text field.';
 
@@ -193,7 +193,10 @@ export const NextTripLookup = () => {
                       <TableCell align='left'>
                         {`Route ${departure.route_id} ${departure.direction_text}`}
                       </TableCell>
-                      <TableCell align='center'>{departure.description}</TableCell>
+                      <TableCell align='center'>
+                        <span>{departure.description}</span>
+                        <Button onClick={() => handleMapDisplay(departure.route_id)}>Show Map</Button>
+                      </TableCell>
                       <TableCell align='right'>
                         {
                           formatDepartureTimeText(
