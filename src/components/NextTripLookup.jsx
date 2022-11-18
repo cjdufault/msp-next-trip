@@ -187,7 +187,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
           )
         })}
       </div>
-      <h4>{statusMessage}</h4>
+      <h4 className={'trip-lookup-status-message'}>{statusMessage}</h4>
       { 
         departures &&
         (
