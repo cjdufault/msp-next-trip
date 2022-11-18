@@ -27,6 +27,10 @@
   color: #61dafb;
 }
 
+.trip-lookup-status-message {
+  padding: 0 15%;
+}
+
 .saved-stops {
   padding-top: 15px;
   display: flex;
@@ -43,4 +47,41 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -25px;
+}
+
+.map-header button{
+  font-size: large;
+}
+
+.route-map-container
+{
+  height: 80vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1080px) {
+  .route-map-container {
+    width: 70vh;
+  }
+}
+
+@media (max-width: 720px) {
+  .route-map-container {
+    width: 60vh;
+  }
+}
+
+@media (max-width: 460px) {
+  .route-map-container {
+    width: 55vh;
+  }
 }
