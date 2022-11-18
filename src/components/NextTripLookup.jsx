@@ -6,13 +6,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-import GetNextTrip from '../apiData/NextTripData';
+import GetNextTrip from '../apiData/TripData';
 
-export const NextTripLookup = ({ handleMapDisplay }) => {
+export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
 
-  const defaultStatusMessage = 'Enter stop number in the text field.';
+  const defaultStatusMessage = 'Enter stop number in the text field, or select a saved stop.';
 
-  const [stopNumber, setStopNumber] = useState('');
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [stopNumber, setStopNumber] = useState(currentStop ?? '');
   const [statusMessage, setStatusMessage] = useState(defaultStatusMessage);
   const [departures, setDepartures] = useState();
   const [savedStops, setSavedStops] = useState(JSON.parse(localStorage.getItem('savedStops')) ?? []);
@@ -115,6 +116,13 @@ export const NextTripLookup = ({ handleMapDisplay }) => {
     updateStopUnstopButtons(stopNumber, departures, savedStops);
   }, [stopNumber, departures, savedStops]);
 
+  if (isFirstLoad) {
+    setIsFirstLoad(false);
+    if (stopNumber !== '') {
+      fetchNextTrips(stopNumber);
+    }
+  }
+
   return (
     <div>
       <div>
@@ -194,8 +202,7 @@ export const NextTripLookup = ({ handleMapDisplay }) => {
                         {`Route ${departure.route_id} ${departure.direction_text}`}
                       </TableCell>
                       <TableCell align='center'>
-                        <span>{departure.description}</span>
-                        <Button onClick={() => handleMapDisplay(departure.route_id)}>Show Map</Button>
+                        {departure.description}
                       </TableCell>
                       <TableCell align='right'>
                         {
@@ -204,6 +211,15 @@ export const NextTripLookup = ({ handleMapDisplay }) => {
                             departure.departure_time
                           )
                         }
+                      </TableCell>
+                      <TableCell>
+                        <Button 
+                          variant={'outlined'}
+                          size={'small'}
+                          onClick={() => handleMapDisplay(departure.route_id, stopNumber)}
+                        >
+                          Show Map
+                        </Button>
                       </TableCell>
                     </TableRow>
                   )

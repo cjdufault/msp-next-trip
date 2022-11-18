@@ -45,10 +45,23 @@
   justify-content: space-evenly;
 }
 
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -25px;
+}
+
+.map-header button{
+  font-size: large;
+}
+
 .route-map-container
 {
   height: 80vh;
   width: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 1080px) {
@@ -65,6 +78,6 @@
 
 @media (max-width: 460px) {
   .route-map-container {
-    width: 50vh;
+    width: 55vh;
   }
 }
