@@ -51,13 +51,19 @@
   width: 100vh;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1080px) {
   .route-map-container {
-    width: 65vh;
+    width: 70vh;
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 720px) {
+  .route-map-container {
+    width: 60vh;
+  }
+}
+
+@media (max-width: 460px) {
   .route-map-container {
     width: 50vh;
   }

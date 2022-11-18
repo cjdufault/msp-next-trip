@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-import GetNextTrip from '../apiData/GetNextTrip';
+import GetNextTrip from '../apiData/NextTripData';
 
 export const NextTripLookup = ({ handleMapDisplay }) => {
 
