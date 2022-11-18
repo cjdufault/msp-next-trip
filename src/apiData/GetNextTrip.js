@@ -1,4 +1,4 @@
-const API_URL = 'https://svc.metrotransit.org/nextripv2';
+import constants from '../constants.json';
 
 async function GetNextTrip(stopNumber) {
 
@@ -9,7 +9,7 @@ async function GetNextTrip(stopNumber) {
     };
   }
 
-  let response = await fetch(`${API_URL}/${stopNumber}`);
+  let response = await fetch(`${constants.API_URL}/${stopNumber}`);
   let json = await response.json();
   json.success = response.status === 200;
   return json;
