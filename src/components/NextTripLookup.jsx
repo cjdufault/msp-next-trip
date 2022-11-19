@@ -218,7 +218,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
                           size={'small'}
                           onClick={() => handleMapDisplay(departure.route_id, stopNumber)}
                         >
-                          Show Map
+                          Map
                         </Button>
                       </TableCell>
                     </TableRow>
