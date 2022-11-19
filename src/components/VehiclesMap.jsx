@@ -1,37 +1,27 @@
-import Button from '@material-ui/core/Button';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import Button from '@mui/material/Button';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
 import { GetVehiclePositions } from "../apiData/MapData";
 import constants from '../constants.json';
 
 export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
 
+  const [hasFocused, setHasFocused] = useState(false);
   const [vehicleCoordinates, setVehicleCoordinates] = useState();
 
-  const fetchVehiclePositions = async (map) => {
+  const fetchVehiclePositions = async () => {
     const positions = await GetVehiclePositions(routeNumber);
     setVehicleCoordinates(positions);
-
-    // map is only passed on first load
-    if (map) {
-      map.panTo(getMidPoint(positions));
-      map.fitBounds(positions, {padding: [50, 50]});
-    } 
   };
 
-  // gets the average of all points - used for initial focus
-  const getMidPoint = (positions) => {
-    let sumLat = 0;
-    let sumLong = 0;
-
-    positions.forEach((position) => {
-      sumLat += position[0];
-      sumLong += position[1];
-    });
-
-    return [sumLat / positions.length, sumLong / positions.length];
-  };
+  function FocusMap() {
+    const map = useMap();
+    if (!hasFocused) {
+      map.fitBounds(vehicleCoordinates, {padding: [50, 50]});
+      setHasFocused(true);
+    }
+    return null;
+  }
 
   // re-requests vehicle positions every 30 seconds while map is displayed
   useEffect(() => {
@@ -45,14 +35,15 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
     <div>
       <div className={'map-header'}>
         <Button onClick={mapExitCallback}><strong>X</strong></Button>
-        <small>Vehicle locations update every 30 seconds.</small>
+        <small>{'Vehicle locations update every 30 seconds.'}</small>
       </div>
       <MapContainer 
-        id={'route-map-container'} c
-        enter={constants.DEFAULT_COORDINATES} 
-        zoom={11} 
-        whenCreated={fetchVehiclePositions}
+        id={'route-map-container'}
+        center={constants.DEFAULT_COORDINATES} 
+        zoom={11}
+        whenReady={fetchVehiclePositions}
       >
+        {vehicleCoordinates && <FocusMap />}
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -67,5 +58,5 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
         }
       </MapContainer>
     </div>
-  )
-};
+  );
+}

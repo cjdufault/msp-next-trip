@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableContainer from '@mui/material/TableContainer';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
+import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 import GetNextTrip from '../apiData/TripData';
 
 export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
@@ -132,6 +135,8 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
         >
           <TextField
             value={ internalValue }
+            variant={'standard'}
+            className={'stop-input-form__text-input'}
             onChange={ (event) => {
               const newValue = event.target.value;
               setInternalValue(newValue);
@@ -141,36 +146,32 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
               setInternalValue(stopNumber);
             }}
           />
-          <Button 
-            onClick={handleGetNextTrip} 
-            size={'small'}
-            variant={'outlined'} 
-          >
-            {'Get Trip Info'}
-          </Button>
+          <div className={'stop-input-form__buttons'}>
+            <Button 
+              onClick={handleGetNextTrip} 
+              size={'small'}
+              variant={'contained'} 
+            >
+              {'Get Trip Info'}
+            </Button>
+            {
+              showSaveButton &&
+              <IconButton
+                onClick={handleSaveStop}
+                size={'small'}
+                variant={'outlined'} 
+              ><SaveIcon /></IconButton>
+            }
+            {
+              showUnSaveButton &&
+              <IconButton
+                onClick={handleUnSaveStop}
+                size={'small'}
+                variant={'outlined'} 
+              ><DeleteIcon /></IconButton>
+            }
+          </div>
         </form>
-      </div>
-      <div className={'save-unsave-btn-area'}>
-        {
-          showSaveButton &&
-          <Button
-            onClick={handleSaveStop}
-            size={'small'}
-            variant={'outlined'} 
-          >
-            {'Save This Stop'}
-          </Button>
-        }
-        {
-          showUnSaveButton &&
-          <Button
-            onClick={handleUnSaveStop}
-            size={'small'}
-            variant={'outlined'} 
-          >
-            {'Un-Save This Stop'}
-          </Button>
-        }
       </div>
       <div className={'saved-stops'}>
         {savedStops.map(stop => 
@@ -178,7 +179,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
             key={stop}
             onClick={handleSelectSavedStop}
             className={'saved-stop-btn'}
-            size={'medium'}
+            size={'small'}
             variant={'outlined'}
           >{stop}</Button>
         )}
@@ -196,8 +197,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
                     <TableRow key={`${departure.trip_id}-${departure.departure_time}`}>
                       <TableCell align='left'>
                         {`Route ${departure.route_id} ${departure.direction_text}`}
-                      </TableCell>
-                      <TableCell align='center'>
+                        <hr />
                         {departure.description}
                       </TableCell>
                       <TableCell align='right'>
@@ -210,7 +210,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
                       </TableCell>
                       <TableCell>
                         <Button 
-                          variant={'outlined'}
+                          variant={'contained'}
                           size={'small'}
                           onClick={() => handleMapDisplay(departure.route_id, stopNumber)}
                         >{'Map'}</Button>

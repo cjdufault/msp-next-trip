@@ -38,15 +38,19 @@
   justify-content: space-evenly;
 }
 
-.save-unsave-btn-area {
-  padding-top: 20px;
-  min-height: 5vh;
-}
-
 .stop-input-form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  padding: 0 10px;
+}
+
+.stop-input-form__text-input {
+  padding-bottom: 5px !important;
+}
+
+.stop-input-form__buttons {
+  padding: 0 10px;
 }
 
 .map-header {
