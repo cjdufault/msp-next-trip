@@ -20,6 +20,7 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
     } 
   };
 
+  // gets the average of all points - used for initial focus
   const getMidPoint = (positions) => {
     let sumLat = 0;
     let sumLong = 0;
@@ -32,6 +33,7 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
     return [sumLat / positions.length, sumLong / positions.length];
   };
 
+  // re-requests vehicle positions every 30 seconds while map is displayed
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetchVehiclePositions();
