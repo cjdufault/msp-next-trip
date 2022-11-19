@@ -68,20 +68,8 @@
   justify-content: center;
 }
 
-@media (max-width: 1080px) {
-  .route-map-container {
-    width: 70vh;
-  }
-}
-
 @media (max-width: 720px) {
   .route-map-container {
-    width: 60vh;
-  }
-}
-
-@media (max-width: 460px) {
-  .route-map-container {
-    width: 55vh;
+    width: 100%;
   }
 }
