@@ -1,8 +1,11 @@
 import constants from '../constants.json';
 
 export async function GetVehiclePositions(routeNumber) {
-  let response = await fetch(`${constants.API_URL}/vehicles/${routeNumber}`);
-  let vehicles = await response.json();
+  const response = await fetch(`${constants.API_URL}/vehicles/${routeNumber}`);
+  const vehicles = await response.json();
 
-  return vehicles.map((v) => { return [v.latitude, v.longitude]; });
+  // inactive vehicles have coords of [0, 0] set -- filter this out
+  const filteredVehicles = vehicles.filter( v => v.latitude !== 0 && v.longitude !== 0 );
+
+  return filteredVehicles.map((fv) => { return [fv.latitude, fv.longitude]; });
 } 

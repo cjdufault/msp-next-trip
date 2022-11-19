@@ -60,16 +60,18 @@
   font-size: large;
 }
 
-.route-map-container
+#route-map-container
 {
   height: 80vh;
   width: 100vh;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 720px) {
-  .route-map-container {
+  #route-map-container {
     width: 100%;
+    margin-bottom: 0;
   }
 }

@@ -9,7 +9,7 @@ async function GetNextTrip(stopNumber) {
     };
   }
 
-  let response = await fetch(`${constants.API_URL}/${stopNumber}`);
+  const response = await fetch(`${constants.API_URL}/${stopNumber}`);
   let json = await response.json();
   json.success = response.status === 200;
   return json;

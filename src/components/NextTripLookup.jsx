@@ -33,7 +33,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   }
 
   const handleSaveStop = () => {
-    let newSavedStops = savedStops;
+    const newSavedStops = savedStops;
     setShowSaveButton(false);
     setShowUnSaveButton(true);
 
@@ -59,7 +59,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   const handleSelectSavedStop = async (event) => {
     setShowSaveButton(false);
     setShowUnSaveButton(true);
-    let savedStop = event.target.innerText;
+    const savedStop = event.target.innerText;
     setStopNumber(savedStop);
     setInternalValue(savedStop);
     await fetchNextTrips(savedStop);
@@ -67,7 +67,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
 
   const fetchNextTrips = async (stop) => {
     setDepartures(null);
-    let NextTripResult = await GetNextTrip(stop);
+    const NextTripResult = await GetNextTrip(stop);
     
     if (NextTripResult.success) {
       setStatusMessage(NextTripResult.stops[0].description);
@@ -79,16 +79,16 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   };
 
   const formatDepartureTimeText = (text, timestamp) => {
-    let departureTime = unixTimestampToLocalTime(timestamp);
+    const departureTime = unixTimestampToLocalTime(timestamp);
     if (text.includes(':')) return `Departs at ${departureTime}`;
     if (text.includes('Min')) return `Departs in ${text} (${departureTime})`;
     return `${text} (${departureTime})`;
   };
 
   const unixTimestampToLocalTime = (timestamp) => {
-    let date = new Date(timestamp * 1000);
-    let hours = date.getHours();
-    let minutes = String(date.getMinutes()).padStart(2, '0');
+    const date = new Date(timestamp * 1000);
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${hours}:${minutes}`;
   };
@@ -173,19 +173,15 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
         }
       </div>
       <div className={'saved-stops'}>
-        {savedStops.map((stop) => {
-          return (
-            <Button
-              key={stop}
-              onClick={handleSelectSavedStop}
-              className={'saved-stop-btn'}
-              size={'medium'}
-              variant={'outlined'}
-            >
-              {stop}
-            </Button>
-          )
-        })}
+        {savedStops.map(stop => 
+          <Button
+            key={stop}
+            onClick={handleSelectSavedStop}
+            className={'saved-stop-btn'}
+            size={'medium'}
+            variant={'outlined'}
+          >{stop}</Button>
+        )}
       </div>
       <h4 className={'trip-lookup-status-message'}>{statusMessage}</h4>
       { 
@@ -217,9 +213,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
                           variant={'outlined'}
                           size={'small'}
                           onClick={() => handleMapDisplay(departure.route_id, stopNumber)}
-                        >
-                          Map
-                        </Button>
+                        >{'Map'}</Button>
                       </TableCell>
                     </TableRow>
                   )
