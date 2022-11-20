@@ -33,23 +33,20 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
     setDepartures(null);
     setStatusMessage(defaultStatusMessage);
     setStopNumber(newValue);
+    setShowSaveButton(false);
+    setShowUnSaveButton(false);
   }
 
   const handleSaveStop = () => {
-    const newSavedStops = savedStops;
-    setShowSaveButton(false);
-    setShowUnSaveButton(true);
-
-    if (!newSavedStops.includes(stopNumber)) {
-      newSavedStops.push(stopNumber);
+    if (!savedStops.includes(stopNumber)) {
+      let newSavedStops = savedStops.concat(stopNumber);
+      setSavedStops(newSavedStops);
       localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
-      setSavedStops((newSavedStops));
     }
   };
 
   const handleUnSaveStop = () => {
-    let newSavedStops = [savedStops.filter(stop => stop !== stopNumber)];
-
+    let newSavedStops = savedStops.filter(stop => stop !== stopNumber);
     setSavedStops(newSavedStops);
     localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
   }

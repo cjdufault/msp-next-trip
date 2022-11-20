@@ -14,7 +14,7 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
     setVehicleCoordinates(positions);
   };
 
-  function FocusMap() {
+  const FocusMap = () => {
     const map = useMap();
     if (!hasFocused) {
       map.fitBounds(vehicleCoordinates, {padding: [50, 50]});
