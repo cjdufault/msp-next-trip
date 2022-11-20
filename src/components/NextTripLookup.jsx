@@ -32,7 +32,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   const handleChangeStopInputBox = (newValue) => {
     setDepartures(null);
     setStatusMessage(defaultStatusMessage);
-    setStopNumber(newValue);
+    setStopNumber(newValue.trim()); // Safari likes to add newlines to this value
     setShowSaveButton(false);
     setShowUnSaveButton(false);
   }
@@ -53,21 +53,21 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
 
   const handleSelectSavedStop = async (event) => {
     const savedStop = event.target.innerText;
-    setStopNumber(savedStop);
-    setInternalValue(savedStop);
+    setStopNumber(savedStop.trim());
+    setInternalValue(savedStop.trim());
     await fetchNextTrips(savedStop);
   };
 
   const fetchNextTrips = async (stop) => {
     setDepartures(null);
-    const NextTripResult = await GetNextTrip(stop);
+    const nextTripResult = await GetNextTrip(stop);
     
-    if (NextTripResult.success) {
-      setStatusMessage(NextTripResult.stops[0].description);
-      setDepartures(NextTripResult.departures);
+    if (nextTripResult.success) {
+      setStatusMessage(nextTripResult.stops[0].description);
+      setDepartures(nextTripResult.departures);
     }
     else {
-      setStatusMessage(NextTripResult.detail);
+      setStatusMessage(nextTripResult.detail ?? nextTripResult.errors.stop_id[0]);
     }
   };
 
