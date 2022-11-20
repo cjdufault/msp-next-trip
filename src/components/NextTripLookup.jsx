@@ -48,12 +48,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   };
 
   const handleUnSaveStop = () => {
-    let newSavedStops = [];
-
-    for (let i = 0; i < savedStops.length; i++) {
-      if (savedStops[i] !== stopNumber)
-        newSavedStops.push(savedStops[i]);
-    }
+    let newSavedStops = [savedStops.filter(stop => stop !== stopNumber)];
 
     setSavedStops(newSavedStops);
     localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
@@ -101,17 +96,10 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
     currentDepartures, 
     currentSavedStops
   ) => {
-    if (currentSavedStops.includes(currentStopNumber)) {
-      setShowSaveButton(false);
-      setShowUnSaveButton(true);
-    }
-    else if (currentDepartures && !currentSavedStops.includes(currentStopNumber)) {
-      setShowSaveButton(true);
-      setShowUnSaveButton(false);
-    }
-    else {
-      setShowSaveButton(false);
-      setShowUnSaveButton(false);
+    if (currentDepartures) {
+      let stopIsSaved = currentSavedStops.includes(currentStopNumber);
+      setShowSaveButton(!stopIsSaved);
+      setShowUnSaveButton(stopIsSaved);
     }
   }
 
