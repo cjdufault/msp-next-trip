@@ -52,8 +52,6 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   }
 
   const handleSelectSavedStop = async (event) => {
-    setShowSaveButton(false);
-    setShowUnSaveButton(true);
     const savedStop = event.target.innerText;
     setStopNumber(savedStop);
     setInternalValue(savedStop);
