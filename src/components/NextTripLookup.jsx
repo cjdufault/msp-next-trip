@@ -102,6 +102,14 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
     updateStopUnstopButtons(stopNumber, departures, savedStops);
   }, [stopNumber, departures, savedStops]);
 
+  // re-requests trip data every 30 seconds
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchNextTrips(stopNumber);
+    }, 30000);
+    return () => clearTimeout(timeout);
+  });
+
   if (isFirstLoad) {
     setIsFirstLoad(false);
     if (stopNumber !== '') {
