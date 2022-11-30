@@ -1,6 +1,6 @@
 import constants from '../constants.json';
 
-export async function GetVehiclePositions(routeNumber) {
+export async function getVehiclePositions(routeNumber) {
   const response = await fetch(`${constants.API_URL}/vehicles/${routeNumber}`);
   const vehicles = await response.json();
 
