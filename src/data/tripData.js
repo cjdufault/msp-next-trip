@@ -1,6 +1,6 @@
 import constants from '../constants.json';
 
-async function GetNextTrip(stopNumber) {
+async function getNextTrip(stopNumber) {
 
   if (stopNumber === ''){
     return { 
@@ -15,4 +15,4 @@ async function GetNextTrip(stopNumber) {
   return json;
 }
 
-export default GetNextTrip;
+export default getNextTrip;

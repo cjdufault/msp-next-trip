@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
-import GetNextTrip from '../apiData/TripData';
+import getNextTrip from '../data/tripData';
 
 export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
 
@@ -60,7 +60,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
 
   const fetchNextTrips = async (stop) => {
     setDepartures(null);
-    const nextTripResult = await GetNextTrip(stop);
+    const nextTripResult = await getNextTrip(stop);
     
     if (nextTripResult.success) {
       setStatusMessage(nextTripResult.stops[0].description);
