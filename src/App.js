@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { NextTripLookup } from './components/NextTripLookup';
 import { VehiclesMap } from './components/VehiclesMap';
+import { RouteLookup } from './components/RouteLookup';
+import { MainMenu } from './components/MainMenu';
 import './App.css';
 
 const App = () => {
@@ -13,25 +15,28 @@ const App = () => {
     setMapRouteNumber(routeNumber);
     setCurrentStop(currentStop);
     setMode('route-map');
-  }
-
+  };
   const handleMapExit = () => {
     setMapRouteNumber(null);
     setMode('next-trip');
-  }
+  };
+  const handleShowRouteLookup = () => {
+    setMapRouteNumber(null);
+    setMode('route-lookup');
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>{'MSP Transit Planner'}</h1>
-        {
-          mode === 'next-trip' && 
-          <NextTripLookup 
-            handleMapDisplay={handleMapDisplay} 
-            currentStop={currentStop}
+    <div className={'App'}>
+      <header className={'App-header'}>
+        <div className={'title-section'}>
+          <h2>{'MSP Transit Planner'}</h2>
+          <MainMenu 
+            showRouteLookup={handleShowRouteLookup}
           />
-        }
-        {mode === 'route-map' && <VehiclesMap routeNumber={mapRouteNumber} mapExitCallback={handleMapExit} />}
+        </div>
+        { mode === 'route-lookup' && <RouteLookup lookupRouteCallback={handleMapDisplay} exitCallback={handleMapExit} /> }
+        { mode === 'next-trip' && <NextTripLookup mapDisplayCallback={handleMapDisplay} currentStop={currentStop} /> }
+        { mode === 'route-map' && <VehiclesMap routeNumber={mapRouteNumber} exitCallback={handleMapExit} /> }
       </header>
     </div>
   );

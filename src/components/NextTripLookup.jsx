@@ -11,7 +11,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import getNextTrip from '../data/tripData';
 
-export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
+export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
 
   const defaultStatusMessage = 'Enter stop number in the text field, or select a saved stop.';
 
@@ -35,7 +35,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
     setStopNumber(newValue.trim()); // Safari likes to add newlines to this value
     setShowSaveButton(false);
     setShowUnSaveButton(false);
-  }
+  };
 
   const handleSaveStop = () => {
     if (!savedStops.includes(stopNumber)) {
@@ -49,7 +49,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
     let newSavedStops = savedStops.filter(stop => stop !== stopNumber);
     setSavedStops(newSavedStops);
     localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
-  }
+  };
 
   const handleSelectSavedStop = async (event) => {
     const savedStop = event.target.innerText;
@@ -120,10 +120,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
   return (
     <div>
       <div>
-        <form 
-          onSubmit={handleGetNextTrip} 
-          className={'stop-input-form'}
-        >
+        <form onSubmit={handleGetNextTrip} className={'stop-input-form'}>
           <TextField
             value={ internalValue }
             variant={'standard'}
@@ -203,7 +200,7 @@ export const NextTripLookup = ({ handleMapDisplay, currentStop }) => {
                         <Button 
                           variant={'contained'}
                           size={'small'}
-                          onClick={() => handleMapDisplay(departure.route_id, stopNumber)}
+                          onClick={() => mapDisplayCallback(departure.route_id, stopNumber)}
                         >{'Map'}</Button>
                       </TableCell>
                     </TableRow>
