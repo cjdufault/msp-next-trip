@@ -49,7 +49,13 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
     <div>
       <div className={'map-header'}>
         <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
-        <small>{'Vehicle locations update every 30 seconds.'}</small>
+        <small>
+          {
+            (vehicleCoordinates && vehicleCoordinates.length > 0) ?
+            'Vehicle locations update every 30 seconds.'
+            : `No data found for "${routeNumber}".`
+          }
+        </small>
       </div>
       <MapContainer 
         id={'route-map-container'}
@@ -62,7 +68,7 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {
-          vehicleCoordinates &&
+          (vehicleCoordinates && vehicleCoordinates.length > 0) &&
           vehicleCoordinates.map(position => 
             <Marker 
               position={position}
