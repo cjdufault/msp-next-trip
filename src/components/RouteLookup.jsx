@@ -33,6 +33,9 @@ export const RouteLookup = ({ lookupRouteCallback, exitCallback }) => {
             setInternalValue(newValue);
             handleRouteInputChange(newValue);
           }}
+          onLoad={ (event) => {
+            event.target.focus();
+          }}
           onBlur={ () => {
             setInternalValue(routeId);
           }}

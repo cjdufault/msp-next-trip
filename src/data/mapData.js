@@ -4,7 +4,7 @@ export async function getVehiclePositions(routeNumber) {
   const response = await fetch(`${constants.API_URL}/vehicles/${routeNumber}`);
 
   if (response.status === 400) {
-    return null;
+    return [];
   }
   const vehicles = await response.json();
 

@@ -32,9 +32,13 @@
   align-items: center;
 }
 
+.main-title {
+  cursor: pointer;
+}
+
 .main-menu-div {
   padding-left: 25px;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 .trip-lookup-status-message {
@@ -61,10 +65,6 @@
 
 .stop-input-form__buttons {
   padding: 0 10px;
-}
-
-.route-lookup {
-  max-width: 500px;
 }
 
 .map-header {
