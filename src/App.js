@@ -29,7 +29,7 @@ const App = () => {
     <div className={'App'}>
       <header className={'App-header'}>
         <div className={'title-section'}>
-          <h1 className={'main-title'} onClick={returnToDefault}>{'MSP Transit Planner'}</h1>
+          <h2 className={'main-title'} onClick={returnToDefault}>{'MSP Transit Planner'}</h2>
           <MainMenu 
             showRouteLookup={handleShowRouteLookup}
           />
