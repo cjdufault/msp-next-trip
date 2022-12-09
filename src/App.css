@@ -27,6 +27,16 @@
   color: #61dafb;
 }
 
+.title-section {
+  display: flex;
+  align-items: center;
+}
+
+.main-menu-div {
+  padding-left: 25px;
+  padding-top: 5px;
+}
+
 .trip-lookup-status-message {
   padding: 0 15%;
 }
@@ -51,6 +61,10 @@
 
 .stop-input-form__buttons {
   padding: 0 10px;
+}
+
+.route-lookup {
+  max-width: 500px;
 }
 
 .map-header {

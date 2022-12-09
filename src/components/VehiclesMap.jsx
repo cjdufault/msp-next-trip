@@ -5,7 +5,9 @@ import { getVehiclePositions } from "../data/mapData";
 import { getRouteShape } from '../data/shapeData';
 import constants from '../constants.json';
 
-export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
+// TODO: implement proper error handling for bad route numbers
+
+export const VehiclesMap = ({ routeNumber, exitCallback }) => {
 
   const [hasFocused, setHasFocused] = useState(false);
   const [vehicleCoordinates, setVehicleCoordinates] = useState();
@@ -46,7 +48,7 @@ export const VehiclesMap = ({ routeNumber, mapExitCallback }) => {
   return (
     <div>
       <div className={'map-header'}>
-        <Button onClick={mapExitCallback}><strong>{'X'}</strong></Button>
+        <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
         <small>{'Vehicle locations update every 30 seconds.'}</small>
       </div>
       <MapContainer 
