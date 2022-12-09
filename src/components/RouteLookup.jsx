@@ -14,7 +14,7 @@ export const RouteLookup = ({ lookupRouteCallback, exitCallback }) => {
   };
 
   const handleRouteInputChange = (newValue) => {
-    setRouteId(newValue);
+    setRouteId(newValue.trim());
   };
 
   return (

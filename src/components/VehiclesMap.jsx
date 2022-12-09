@@ -40,7 +40,9 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
   // re-requests vehicle positions every 30 seconds while map is displayed
   useEffect(() => {
     const timeout = setTimeout(() => {
-      fetchVehiclePositions();
+      if (vehicleCoordinates && vehicleCoordinates.length > 0) {
+        fetchVehiclePositions();
+      }
     }, 30000);
     return () => clearTimeout(timeout);
   });
