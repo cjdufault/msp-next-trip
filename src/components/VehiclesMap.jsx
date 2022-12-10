@@ -10,6 +10,7 @@ import constants from '../constants.json';
 export const VehiclesMap = ({ routeNumber, exitCallback }) => {
 
   const [hasFocused, setHasFocused] = useState(false);
+  const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
   const [vehicleCoordinates, setVehicleCoordinates] = useState();
   const [routeShape, setRouteShape] = useState();
 
@@ -24,6 +25,7 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
   };
 
   const initData = async () => {
+    setHasAttemptedFetch(true);
     await fetchRouteShape();
     await fetchVehiclePositions();
   }
@@ -40,7 +42,7 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
   // re-requests vehicle positions every 30 seconds while map is displayed
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (vehicleCoordinates && vehicleCoordinates.length > 0) {
+      if (hasAttemptedFetch && vehicleCoordinates) {
         fetchVehiclePositions();
       }
     }, 30000);
@@ -53,36 +55,40 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
         <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
         <small>
           {
-            (vehicleCoordinates && vehicleCoordinates.length > 0) ?
-            'Vehicle locations update every 30 seconds.'
-            : `No data found for "${routeNumber}".`
+            (hasAttemptedFetch && !vehicleCoordinates) ?
+            `No data found for route "${routeNumber}".`
+            : 'Vehicle locations update every 30 seconds.'
           }
         </small>
       </div>
-      <MapContainer 
-        id={'route-map-container'}
-        center={constants.DEFAULT_COORDINATES} 
-        zoom={11}
-        whenReady={initData}
-      >
-        {vehicleCoordinates && <FocusMap />}
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {
-          (vehicleCoordinates && vehicleCoordinates.length > 0) &&
-          vehicleCoordinates.map(position => 
-            <Marker 
-              position={position}
-              key={`${position[0]}-${position[1]}`} 
-            /> 
-          )
-        }
-        {
-          routeShape &&
-          <Polyline pathOptions={{color: 'blue'}} positions={routeShape}/>
-        }
-      </MapContainer>
+      {
+        (hasAttemptedFetch && !vehicleCoordinates) ?
+        ''
+        : <MapContainer 
+          id={'route-map-container'}
+          center={constants.DEFAULT_COORDINATES} 
+          zoom={11}
+          whenReady={initData}
+        >
+          {vehicleCoordinates && <FocusMap />}
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {
+            (vehicleCoordinates && vehicleCoordinates.length > 0) &&
+            vehicleCoordinates.map(position => 
+              <Marker 
+                position={position}
+                key={`${position[0]}-${position[1]}`} 
+              /> 
+            )
+          }
+          {
+            routeShape &&
+            <Polyline pathOptions={{color: 'blue'}} positions={routeShape}/>
+          }
+        </MapContainer>
+      }
     </div>
   );
 }
