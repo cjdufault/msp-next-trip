@@ -26,8 +26,11 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
 
   const initData = async () => {
     setHasAttemptedFetch(true);
-    await fetchRouteShape();
-    await fetchVehiclePositions();
+    try {
+      await fetchRouteShape();
+      await fetchVehiclePositions();
+    }
+    catch (err) {}
   }
 
   const FocusMap = () => {
