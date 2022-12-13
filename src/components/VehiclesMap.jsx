@@ -33,7 +33,9 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
   const FocusMap = () => {
     const map = useMap();
     if (!hasFocused) {  // only center focus one time
-      map.fitBounds(vehicleCoordinates, {padding: [50, 50]});
+      if (vehicleCoordinates.length > 0) {
+        map.fitBounds(vehicleCoordinates, {padding: [50, 50]});
+      }
       setHasFocused(true);
     }
     return null;
@@ -50,7 +52,7 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
   });
 
   return (
-    <div>
+    <div className={'route-map-div'}>
       <div className={'map-header'}>
         <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
         <small>

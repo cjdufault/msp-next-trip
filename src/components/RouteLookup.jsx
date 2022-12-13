@@ -21,7 +21,7 @@ export const RouteLookup = ({ lookupRouteCallback, exitCallback }) => {
     <div className={'route-lookup'}>
       <div className={'map-header'}>
         <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
-        <small>{'Enter a route number below to view a map of the route.'}</small>
+        <small>{'Search for a map by entering the route number.'}</small>
       </div>
       <form onSubmit={handleLookupClick} className={'stop-input-form'}>
         <TextField
