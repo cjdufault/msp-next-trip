@@ -181,7 +181,7 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
         <Select
           id={'saved-stop-selector'}
           size={'small'}
-          value={stopNumber}
+          value={savedStops.map(stop => stop.number).includes(stopNumber) ? stopNumber : ''}
           onChange={handleSelectSavedStop}
         >
           {savedStops.map(stop => 
