@@ -177,10 +177,10 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
         </form>
       </div>
       <div className={'saved-stops'}>
+        <span>{'Saved stops:'}</span>
         <Select
           id={'saved-stop-selector'}
           value={stopNumber}
-          label={'Select a Saved Stop'}
           onChange={handleSelectSavedStop}
         >
           {savedStops.map(stop => 

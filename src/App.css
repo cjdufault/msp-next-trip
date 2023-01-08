@@ -50,6 +50,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-items: center;
+}
+
+.saved-stops #saved-stop-selector {
+  min-width: 10em;
 }
 
 .stop-input-form {
