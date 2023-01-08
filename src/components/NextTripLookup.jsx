@@ -7,6 +7,8 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import getNextTrip from '../data/tripData';
@@ -20,6 +22,7 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
   const [statusMessage, setStatusMessage] = useState(defaultStatusMessage);
   const [departures, setDepartures] = useState();
   const [savedStops, setSavedStops] = useState(JSON.parse(localStorage.getItem('savedStops')) ?? []);
+  const [stopDescription, setStopDescription] = useState();
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showUnSaveButton, setShowUnSaveButton] = useState(false);
   const [internalValue, setInternalValue] = useState(stopNumber);
@@ -38,21 +41,30 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
   };
 
   const handleSaveStop = () => {
-    if (!savedStops.includes(stopNumber)) {
-      let newSavedStops = savedStops.concat(stopNumber);
+
+    let savedStopNumbers = savedStops.map(stop => stop.number);
+
+    if (!savedStopNumbers.includes(stopNumber)) {
+
+      let stopData = {
+        number: stopNumber,
+        description: stopDescription
+      }
+
+      let newSavedStops = savedStops.concat(stopData);
       setSavedStops(newSavedStops);
       localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
     }
   };
 
   const handleUnSaveStop = () => {
-    let newSavedStops = savedStops.filter(stop => stop !== stopNumber);
+    let newSavedStops = savedStops.filter(stop => stop.number !== stopNumber);
     setSavedStops(newSavedStops);
     localStorage.setItem('savedStops', JSON.stringify(newSavedStops));
   };
 
   const handleSelectSavedStop = async (event) => {
-    const savedStop = event.target.innerText;
+    const savedStop = event.target.value;
     setStopNumber(savedStop.trim());
     setInternalValue(savedStop.trim());
     await fetchNextTrips(savedStop);
@@ -63,6 +75,7 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
     const nextTripResult = await getNextTrip(stop);
     
     if (nextTripResult.success) {
+      setStopDescription(nextTripResult.stops[0].description);
       setStatusMessage(nextTripResult.stops[0].description);
       setDepartures(nextTripResult.departures);
     }
@@ -92,7 +105,9 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
     currentSavedStops
   ) => {
     if (currentDepartures) {
-      let stopIsSaved = currentSavedStops.includes(currentStopNumber);
+      let savedStopNumbers = currentSavedStops.map(stop => stop.number);
+
+      let stopIsSaved = savedStopNumbers.includes(currentStopNumber);
       setShowSaveButton(!stopIsSaved);
       setShowUnSaveButton(stopIsSaved);
     }
@@ -162,15 +177,16 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
         </form>
       </div>
       <div className={'saved-stops'}>
-        {savedStops.map(stop => 
-          <Button
-            key={stop}
-            onClick={handleSelectSavedStop}
-            className={'saved-stop-btn'}
-            size={'small'}
-            variant={'outlined'}
-          >{stop}</Button>
-        )}
+        <Select
+          id={'saved-stop-selector'}
+          value={stopNumber}
+          label={'Select a Saved Stop'}
+          onChange={handleSelectSavedStop}
+        >
+          {savedStops.map(stop => 
+            <MenuItem value={stop.number} key={stop.number}>{stop.description}</MenuItem>
+          )}
+        </Select>
       </div>
       <h4 className={'trip-lookup-status-message'}>{statusMessage}</h4>
       { 

@@ -5,8 +5,6 @@ import { getVehiclePositions } from "../data/mapData";
 import { getRouteShape } from '../data/shapeData';
 import constants from '../constants.json';
 
-// TODO: implement proper error handling for bad route numbers
-
 export const VehiclesMap = ({ routeNumber, exitCallback }) => {
 
   const [hasFocused, setHasFocused] = useState(false);
