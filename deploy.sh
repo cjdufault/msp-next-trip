@@ -7,7 +7,7 @@ END_COLOR="\e[0m"
 
 REACT_APP_REPO_NAME="msp-next-trip"
 REACT_APP_REPO_URL="https://github.com/cjdufault/${REACT_APP_REPO_NAME}.git"
-GTFS_PARSER_VERSION="v0.0.5"
+GTFS_PARSER_VERSION="v0.0.7"
 GTFS_PARSER_PACKAGE_URL="https://github.com/cjdufault/routedataparse/releases/download/${GTFS_PARSER_VERSION}/routedataparse"
 METRO_TRANSIT_GTFS_FEED_URL="https://svc.metrotransit.org/mtgtfs/gtfs.zip"
 
@@ -27,7 +27,7 @@ chmod +x routedataparse
 sudo mv routedataparse /usr/local/bin/
 
 echo -e "${COLOR_BLUE}Downloading and parsing route data...${END_COLOR}"
-routedataparse $METRO_TRANSIT_GTFS_FEED_URL build/shapes
+routedataparse $METRO_TRANSIT_GTFS_FEED_URL build/shapes build/stops
 
 echo -e "${COLOR_BLUE}Deploying to webroot...${END_COLOR}"
 sudo rm -rf /var/www/html/*
