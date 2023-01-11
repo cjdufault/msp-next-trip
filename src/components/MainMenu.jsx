@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export const MainMenu = ({ showRouteLookup }) => {
+export const MainMenu = ({ showRouteLookup, showStopLookup }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -20,6 +20,11 @@ export const MainMenu = ({ showRouteLookup }) => {
     handleClose();
     showRouteLookup();
   };
+
+  const handleStopLookupClick = () => {
+    handleClose();
+    showStopLookup();
+  }
 
   return (
     <div className={'main-menu-div'}>
@@ -41,6 +46,7 @@ export const MainMenu = ({ showRouteLookup }) => {
           'aria-labelledby': 'menu-button',
         }}
       >
+        <MenuItem onClick={handleStopLookupClick}>{'Search for a Stop'}</MenuItem>
         <MenuItem onClick={handleRouteLookupClick}>{'Find Maps by Route'}</MenuItem>
       </Menu>
     </div>

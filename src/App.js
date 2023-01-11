@@ -4,6 +4,7 @@ import { VehiclesMap } from './components/VehiclesMap';
 import { RouteLookup } from './components/RouteLookup';
 import { MainMenu } from './components/MainMenu';
 import './App.css';
+import { StopLookup } from './components/StopLookup';
 
 const App = () => {
 
@@ -24,6 +25,14 @@ const App = () => {
     setMapRouteNumber(null);
     setMode('route-lookup');
   };
+  const handleShowStopLookup = () => {
+    setMapRouteNumber(null);
+    setMode('stop-lookup');
+  }
+  const handleStopLookupSelect = (stopNumber) => {
+    setCurrentStop(stopNumber);
+    setMode('next-trip');
+  };
 
   return (
     <div className={'App'}>
@@ -32,11 +41,13 @@ const App = () => {
           <h2 className={'main-title'} onClick={returnToDefault}>{'MSP Transit Planner'}</h2>
           <MainMenu 
             showRouteLookup={handleShowRouteLookup}
+            showStopLookup={handleShowStopLookup}
           />
         </div>
         { mode === 'route-lookup' && <RouteLookup lookupRouteCallback={handleMapDisplay} exitCallback={returnToDefault} /> }
         { mode === 'next-trip' && <NextTripLookup mapDisplayCallback={handleMapDisplay} currentStop={currentStop} /> }
         { mode === 'route-map' && <VehiclesMap routeNumber={mapRouteNumber} exitCallback={returnToDefault} /> }
+        { mode === 'stop-lookup' && <StopLookup lookupStopCallback={handleStopLookupSelect} exitCallback={returnToDefault} /> }
       </header>
     </div>
   );
