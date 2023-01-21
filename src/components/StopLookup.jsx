@@ -11,13 +11,15 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export const StopLookup = ({ lookupStopCallback, exitCallback }) => {
 
+  const resultsToDisplay = 10;
+
   const [query, setQuery] = useState('');
   const [matches, setMatches] = useState([]);
 
   const handleLookupClick = async (event) => {
     event.preventDefault();
     const result = await stopSearch(query);
-    setMatches(result);
+    setMatches(result.slice(0, resultsToDisplay - 1));
   }
 
   return (
