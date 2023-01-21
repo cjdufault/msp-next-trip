@@ -34,9 +34,7 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
 
   const clearAll = () => {
     setInternalValue('');
-    setStopNumber(null);
-    setDepartures(null);
-    setStatusMessage(defaultStatusMessage);
+    handleChangeStopInputBox('');
   }
 
   const handleChangeStopInputBox = (newValue) => {
