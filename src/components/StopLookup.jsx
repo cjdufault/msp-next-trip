@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export const StopLookup = ({ lookupStopCallback, exitCallback }) => {
 
@@ -22,8 +23,8 @@ export const StopLookup = ({ lookupStopCallback, exitCallback }) => {
   return (
     <div className={'stop-lookup'}>
       <div className={'map-header'}>
-        <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
-        <small>{'Search for a stop'}</small>
+        <Button onClick={exitCallback}><ArrowBackIcon /></Button>
+        <small>{'Search for a stop by intersection'}</small>
       </div>
       <form onSubmit={handleLookupClick} className={'stop-input-form'}>
         <TextField

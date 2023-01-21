@@ -32,6 +32,13 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
     await fetchNextTrips(stopNumber);
   };
 
+  const clearAll = () => {
+    setInternalValue('');
+    setStopNumber(null);
+    setDepartures(null);
+    setStatusMessage(defaultStatusMessage);
+  }
+
   const handleChangeStopInputBox = (newValue) => {
     setDepartures(null);
     setStatusMessage(defaultStatusMessage);
@@ -136,19 +143,22 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
     <div>
       <div>
         <form onSubmit={handleGetNextTrip} className={'stop-input-form'}>
-          <TextField
-            value={ internalValue }
-            variant={'standard'}
-            className={'stop-input-form__text-input'}
-            onChange={ (event) => {
-              const newValue = event.target.value;
-              setInternalValue(newValue);
-              handleChangeStopInputBox(newValue);
-            }}
-            onBlur={ () => {
-              setInternalValue(stopNumber);
-            }}
-          />
+          <div>
+            <TextField
+              value={ internalValue }
+              variant={'standard'}
+              className={'stop-input-form__text-input'}
+              onChange={ (event) => {
+                const newValue = event.target.value;
+                setInternalValue(newValue);
+                handleChangeStopInputBox(newValue);
+              }}
+              onBlur={ () => {
+                setInternalValue(stopNumber);
+              }}
+            />
+            <Button onClick={clearAll}>{'Clear'}</Button>
+          </div>
           <div className={'stop-input-form__buttons'}>
             <Button 
               onClick={handleGetNextTrip} 
