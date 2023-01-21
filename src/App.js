@@ -32,7 +32,7 @@ const App = () => {
   }
   const handleStopLookupSelect = (stopNumber) => {
     setCurrentStop(stopNumber);
-    setTimeout(() => setMode('next-trip'), 1000);
+    setMode('next-trip');
   }
 
   return (
