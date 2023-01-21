@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export const RouteLookup = ({ lookupRouteCallback, exitCallback }) => {
 
@@ -20,7 +22,7 @@ export const RouteLookup = ({ lookupRouteCallback, exitCallback }) => {
   return (
     <div className={'route-lookup'}>
       <div className={'map-header'}>
-        <Button onClick={exitCallback}><strong>{'X'}</strong></Button>
+        <IconButton onClick={exitCallback}><ArrowBackIcon /></IconButton>
         <small>{'Search for a map by entering the route number.'}</small>
       </div>
       <form onSubmit={handleLookupClick} className={'stop-input-form'}>

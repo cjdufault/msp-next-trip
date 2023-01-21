@@ -13,7 +13,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import getNextTrip from '../data/tripData';
 
-export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
+export const NextTripLookup = ({ mapDisplayCallback, clearStopCallback, currentStop }) => {
 
   const defaultStatusMessage = 'Enter stop number in the text field, or select a saved stop.';
 
@@ -31,6 +31,12 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
     event.preventDefault();
     await fetchNextTrips(stopNumber);
   };
+
+  const clearAll = () => {
+    clearStopCallback();
+    setInternalValue('');
+    handleChangeStopInputBox('');
+  }
 
   const handleChangeStopInputBox = (newValue) => {
     setDepartures(null);
@@ -136,19 +142,22 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
     <div>
       <div>
         <form onSubmit={handleGetNextTrip} className={'stop-input-form'}>
-          <TextField
-            value={ internalValue }
-            variant={'standard'}
-            className={'stop-input-form__text-input'}
-            onChange={ (event) => {
-              const newValue = event.target.value;
-              setInternalValue(newValue);
-              handleChangeStopInputBox(newValue);
-            }}
-            onBlur={ () => {
-              setInternalValue(stopNumber);
-            }}
-          />
+          <div>
+            <TextField
+              value={ internalValue }
+              variant={'standard'}
+              className={'stop-input-form__text-input'}
+              onChange={ (event) => {
+                const newValue = event.target.value;
+                setInternalValue(newValue);
+                handleChangeStopInputBox(newValue);
+              }}
+              onBlur={ () => {
+                setInternalValue(stopNumber);
+              }}
+            />
+            <Button onClick={clearAll}>{'Clear'}</Button>
+          </div>
           <div className={'stop-input-form__buttons'}>
             <Button 
               onClick={handleGetNextTrip} 
