@@ -1,9 +1,9 @@
-import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, Polyline } from 'react-leaflet'
 import { getVehiclePositions } from "../data/mapData";
 import { getRouteShape } from '../data/shapeData';
 import constants from '../constants.json';
+import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export const VehiclesMap = ({ routeNumber, exitCallback }) => {
@@ -56,7 +56,7 @@ export const VehiclesMap = ({ routeNumber, exitCallback }) => {
   return (
     <div className={'route-map-div'}>
       <div className={'map-header'}>
-        <Button onClick={exitCallback}><ArrowBackIcon /></Button>
+        <IconButton onClick={exitCallback}><ArrowBackIcon /></IconButton>
         <small>
           {
             (hasAttemptedFetch && !vehicleCoordinates) ?
