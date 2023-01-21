@@ -11,6 +11,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
 import getNextTrip from '../data/tripData';
 
 export const NextTripLookup = ({ mapDisplayCallback, clearStopCallback, currentStop }) => {
@@ -126,7 +127,7 @@ export const NextTripLookup = ({ mapDisplayCallback, clearStopCallback, currentS
   // re-requests trip data every 30 seconds
   useEffect(() => {
     const timeout = setTimeout(() => {
-      fetchNextTrips(stopNumber);
+      if (stopNumber) fetchNextTrips(stopNumber);
     }, 30000);
     return () => clearTimeout(timeout);
   });
@@ -156,7 +157,7 @@ export const NextTripLookup = ({ mapDisplayCallback, clearStopCallback, currentS
                 setInternalValue(stopNumber);
               }}
             />
-            <Button onClick={clearAll}>{'Clear'}</Button>
+            <IconButton onClick={clearAll}><ClearIcon fontSize={'small'}/></IconButton>
           </div>
           <div className={'stop-input-form__buttons'}>
             <Button 
