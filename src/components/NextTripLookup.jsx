@@ -13,7 +13,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import getNextTrip from '../data/tripData';
 
-export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
+export const NextTripLookup = ({ mapDisplayCallback, clearStopCallback, currentStop }) => {
 
   const defaultStatusMessage = 'Enter stop number in the text field, or select a saved stop.';
 
@@ -33,6 +33,7 @@ export const NextTripLookup = ({ mapDisplayCallback, currentStop }) => {
   };
 
   const clearAll = () => {
+    clearStopCallback();
     setInternalValue('');
     handleChangeStopInputBox('');
   }

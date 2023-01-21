@@ -15,24 +15,25 @@ const App = () => {
   const returnToDefault = () => {
     setMapRouteNumber(null);
     setMode('next-trip');
-  };
+  }
+  const handleClearStop = () => setCurrentStop(null);
   const handleMapDisplay = (routeNumber, currentStop) => {
     setMapRouteNumber(routeNumber);
     setCurrentStop(currentStop);
     setMode('route-map');
-  };
+  }
   const handleShowRouteLookup = () => {
     setMapRouteNumber(null);
     setMode('route-lookup');
-  };
+  }
   const handleShowStopLookup = () => {
     setMapRouteNumber(null);
     setMode('stop-lookup');
   }
   const handleStopLookupSelect = (stopNumber) => {
     setCurrentStop(stopNumber);
-    setMode('next-trip');
-  };
+    setTimeout(() => setMode('next-trip'), 1000);
+  }
 
   return (
     <div className={'App'}>
@@ -45,7 +46,7 @@ const App = () => {
           />
         </div>
         { mode === 'route-lookup' && <RouteLookup lookupRouteCallback={handleMapDisplay} exitCallback={returnToDefault} /> }
-        { mode === 'next-trip' && <NextTripLookup mapDisplayCallback={handleMapDisplay} currentStop={currentStop} /> }
+        { mode === 'next-trip' && <NextTripLookup mapDisplayCallback={handleMapDisplay} clearStopCallback={handleClearStop} currentStop={currentStop} /> }
         { mode === 'route-map' && <VehiclesMap routeNumber={mapRouteNumber} exitCallback={returnToDefault} /> }
         { mode === 'stop-lookup' && <StopLookup lookupStopCallback={handleStopLookupSelect} exitCallback={returnToDefault} /> }
       </header>
