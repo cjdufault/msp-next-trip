@@ -72,8 +72,8 @@ export const NextTripLookup = ({ mapDisplayCallback, clearStopCallback, currentS
 
   const handleSelectSavedStop = async (event) => {
     const savedStop = event.target.value;
-    setStopNumber(savedStop.trim());
-    setInternalValue(savedStop.trim());
+    setStopNumber(savedStop.toString().trim());
+    setInternalValue(savedStop.toString().trim());
     await fetchNextTrips(savedStop);
   };
 
